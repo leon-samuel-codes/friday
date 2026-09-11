@@ -1,0 +1,502 @@
+Absolutely. Since you want to **learn while building FRIDAY**, I’d build it in phases rather than jumping straight to voice/JARVIS-style features.
+
+# 🤖 FRIDAY — Complete Roadmap
+
+### Phase 1 — Core Chat ✅
+
+**Goal:** Get a working local AI assistant.
+
+You already have this.
+
+* Ollama
+* Qwen model
+* User input
+* AI responses
+* Conversation history
+* System personality prompt
+
+**Result:** You can chat with FRIDAY.
+
+---
+
+### Phase 2 — Python Fundamentals 📚
+
+**Learn from Bro Code first.**
+
+Learn:
+
+* Lists
+* Dictionaries
+* Functions
+* File handling
+* Exception handling
+* Modules
+
+While learning, don't constantly modify FRIDAY. Build small experiments alongside it.
+
+**Result:** You understand the Python needed to properly build FRIDAY rather than relying on generated code.
+
+---
+
+### Phase 3 — Clean FRIDAY Architecture 🧹
+
+**Goal:** Stop having everything in one giant `main.py`.
+
+Split FRIDAY into components such as:
+
+```text
+FRIDAY/
+│
+├── main.py
+├── ai.py
+├── memory.py
+├── commands.py
+└── config.py
+```
+
+Each file has a specific job.
+
+**Result:** You have a maintainable Python project instead of one massive script.
+
+---
+
+### Phase 4 — Persistent Memory 🧠
+
+**Goal:** Make FRIDAY remember information between launches.
+
+Learn/use:
+
+* Dictionaries
+* Lists
+* JSON
+* File handling
+
+For example:
+
+```text
+FRIDAY
+"I like dark mode."
+
+      ↓
+
+save
+
+      ↓
+
+memory.json
+```
+
+When FRIDAY starts again, it loads the saved information.
+
+**Result:** FRIDAY has basic long-term memory.
+
+---
+
+### Phase 5 — Conversation Memory 💬
+
+Your current `messages` list already gives FRIDAY conversation context.
+
+Now improve it.
+
+Implement:
+
+* [ ] Conversation history
+* [ ] History limits
+* [ ] Save conversations
+* [ ] Load previous conversations
+* [ ] Start a new conversation
+* [ ] Clear conversation
+
+**Result:** FRIDAY behaves more like a real chatbot rather than a simple API demo.
+
+---
+
+### Phase 6 — Command System ⚙️
+
+**Goal:** FRIDAY should distinguish between chatting and performing actions.
+
+For example:
+
+```text
+You: What's 25 * 40?
+
+FRIDAY: 1000
+```
+
+But:
+
+```text
+You: Open YouTube
+```
+
+should perform an action rather than ask the LLM to explain how to open YouTube.
+
+Build commands for things like:
+
+* [ ] Calculator
+* [ ] Open websites
+* [ ] Open applications
+* [ ] Tell the time
+* [ ] Tell the date
+* [ ] Basic system information
+
+**Result:**
+
+```text
+User
+ ↓
+FRIDAY
+ ├── Conversation → Qwen
+ └── Command → Python action
+```
+
+This is a **major milestone**.
+
+---
+
+# Phase 7 — Make FRIDAY Actually Useful 🛠️
+
+Add practical capabilities gradually:
+
+* [ ] Calculator
+* [ ] Unit conversion
+* [ ] Date/time
+* [ ] Web search
+* [ ] Weather
+* [ ] Open programs
+* [ ] Open websites
+* [ ] File/folder navigation
+* [ ] Basic PC information
+
+Don't build everything at once.
+
+**Result:** FRIDAY becomes an actual desktop assistant.
+
+---
+
+# Phase 8 — Tool/Function Calling 🧠⚙️
+
+Now make the AI decide when it needs a tool.
+
+Conceptually:
+
+```text
+User:
+"What is 542 × 37?"
+
+       ↓
+
+Qwen decides:
+"I need calculator"
+
+       ↓
+
+Python calculator()
+
+       ↓
+
+Result → Qwen
+
+       ↓
+
+FRIDAY:
+"542 × 37 = 20,054"
+```
+
+Later you could have:
+
+```text
+tools/
+├── calculator
+├── browser
+├── weather
+├── system
+└── files
+```
+
+**Result:** FRIDAY can intelligently choose between talking and doing.
+
+---
+
+# Phase 9 — Better Memory 🧠
+
+Once basic memory works, improve it.
+
+Separate:
+
+```text
+Short-term memory
+→ current conversation
+
+Long-term memory
+→ important information about the user
+
+Conversation history
+→ previous chats
+```
+
+Eventually you can learn about:
+
+* JSON
+* databases
+* SQLite
+* embeddings/vector databases
+
+**Don't jump to vector databases immediately.** Start simple.
+
+**Result:** FRIDAY can remember useful information without stuffing everything into every prompt.
+
+---
+
+# Phase 10 — Voice Input 🎤
+
+Now move from:
+
+```text
+You type
+ ↓
+FRIDAY
+```
+
+to:
+
+```text
+You speak
+ ↓
+Speech recognition
+ ↓
+FRIDAY
+```
+
+Learn/use a speech-to-text library.
+
+Start with **push-to-talk**, not always-listening.
+
+**Result:**
+
+> You speak → FRIDAY understands.
+
+---
+
+# Phase 11 — Voice Output 🔊
+
+Add text-to-speech.
+
+Pipeline:
+
+```text
+You
+ ↓
+Speech → Text
+ ↓
+FRIDAY
+ ↓
+Qwen
+ ↓
+Response
+ ↓
+Text → Speech
+ ↓
+FRIDAY speaks
+```
+
+**Result:** You can actually talk to FRIDAY.
+
+---
+
+# Phase 12 — Wake Word 🎙️
+
+Only after voice input/output works.
+
+For example:
+
+```text
+"FRIDAY..."
+```
+
+activates the assistant.
+
+Then:
+
+```text
+"FRIDAY, what's the weather?"
+```
+
+FRIDAY wakes → listens → processes → responds.
+
+**Result:** More natural assistant experience.
+
+---
+
+# Phase 13 — GUI 🖥️
+
+Build an actual FRIDAY interface.
+
+Something like:
+
+```text
+┌──────────────────────────────────┐
+│             FRIDAY               │
+│                                  │
+│  You: What's the weather?        │
+│                                  │
+│  FRIDAY: It's currently...       │
+│                                  │
+│                                  │
+│  🎤          Type a message...   │
+└──────────────────────────────────┘
+```
+
+You could use:
+
+* Tkinter
+* PySide/PyQt
+* another GUI framework you learn later
+
+Add:
+
+* [ ] Chat display
+* [ ] Input box
+* [ ] Send button
+* [ ] Microphone button
+* [ ] Settings
+* [ ] Memory controls
+
+**Result:** FRIDAY becomes a proper desktop application.
+
+---
+
+# Phase 14 — PC Integration 🖥️⚙️
+
+Now make it feel like a desktop assistant.
+
+Possible capabilities:
+
+* [ ] Launch applications
+* [ ] Open folders
+* [ ] Control certain settings
+* [ ] Search files
+* [ ] Read selected files
+* [ ] Show system information
+* [ ] Manage your own FRIDAY settings
+
+Keep permissions and actions explicit—don't give the assistant unrestricted ability to execute arbitrary commands.
+
+**Result:** FRIDAY can interact with your PC.
+
+---
+
+# Phase 15 — Advanced AI 🧠
+
+Once the fundamentals are solid:
+
+* [ ] Better prompting
+* [ ] Tool calling
+* [ ] Structured outputs
+* [ ] Context management
+* [ ] Memory retrieval
+* [ ] RAG
+* [ ] Local model experimentation
+* [ ] Different models for different tasks
+
+You can experiment with models beyond Qwen 3 4B as your hardware allows.
+
+**Result:** FRIDAY becomes much more capable without needing to hard-code every response.
+
+---
+
+# Phase 16 — Polish & Reliability 🧪
+
+This is the boring part that makes it **actually good**.
+
+Add:
+
+* [ ] Proper error handling
+* [ ] Logging
+* [ ] Configuration system
+* [ ] Clean project structure
+* [ ] Loading indicators
+* [ ] Graceful shutdown
+* [ ] Handle Ollama being unavailable
+* [ ] Handle internet being unavailable
+* [ ] Handle invalid commands
+* [ ] Test individual components
+
+**Result:** FRIDAY doesn't fall apart whenever something unexpected happens.
+
+---
+
+# 🏆 FINAL FRIDAY
+
+Your eventual architecture could look something like:
+
+```text
+                         ┌──────────────┐
+                         │     YOU      │
+                         └──────┬───────┘
+                                │
+                    Text / Voice Input
+                                │
+                                ▼
+                       ┌────────────────┐
+                       │    FRIDAY      │
+                       │    CORE        │
+                       └───────┬────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+           Memory            Qwen             Tools
+              │                │                │
+              │                │       ┌────────┼────────┐
+              │                │       │        │        │
+              │                │    Browser  System  Calculator
+              │                │
+              └────────────────┼────────────────┘
+                               │
+                               ▼
+                         FRIDAY RESPONSE
+                               │
+                         ┌─────┴─────┐
+                         │           │
+                       Text        Voice
+```
+
+## ⭐ The exact order I'd recommend for YOU
+
+Don't try to build the whole thing now.
+
+```text
+NOW
+│
+├── Finish calculator functions ✅
+│
+├── Bro Code
+│   ├── Lists
+│   ├── Dictionaries
+│   ├── File Handling
+│   └── Exception Handling
+│
+▼
+FRIDAY V2
+├── Clean code into functions/files
+├── Persistent memory
+├── Conversation management
+├── Commands
+├── Tools
+├── Better memory
+├── Voice input
+├── Voice output
+├── Wake word
+├── GUI
+├── PC integration
+├── Advanced AI/RAG
+└── Testing + polish
+│
+▼
+🏆 FRIDAY FINAL
+```
+
+**Most important:** don't think of "final FRIDAY" as one project you have to build now. Every phase is basically **another Python/AI skill you learn and then add to the project**.
+
+Your current FRIDAY is **V1: local conversational AI**. The goal is to keep upgrading it as your programming ability grows.
