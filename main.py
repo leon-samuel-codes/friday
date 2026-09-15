@@ -1,5 +1,5 @@
 
-
+from ai import build_system_prompt     
 from ollama import chat
 
 from memory import load_memory,  save_memory 
@@ -17,15 +17,8 @@ else:
     print(f"FRIDAY: Welcome back, {memory['name']}!")
 
 
-system_prompt = "You are FRIDAY, a sharp and loyal AI assistant. Keep answers short and direct."
+system_prompt = build_system_prompt(memory)
 
-if memory.get("name"):
-    system_prompt += f" The user's name is {memory['name']}. Call them by their name sometimes."
-
-
-if memory.get("facts"):
-        facts_sentence = "; ".join(memory["facts"])
-        system_prompt += f" Facts about the user: {facts_sentence}"
 
 
 
@@ -40,7 +33,8 @@ while True:
         fact=user_input[9:]
         memory["facts"].append(fact)
         save_memory(memory)
-        print(f"FRIDAY: Got it! I will remember {fact}")
+        print("[saved ✓]")
+
     messages.append({"role": "user", "content": user_input})  
 
     response = chat(
