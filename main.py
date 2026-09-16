@@ -1,7 +1,8 @@
 from ai import build_system_prompt     
 from ollama import chat
 from memory import load_memory,  save_memory 
-from commands import get_time, get_date
+from commands import get_time, get_date, open_app, search_web
+
 memory = load_memory()
 if memory.get("name") is None:              
     name = input("FRIDAY: I don't know you yet. What's your name? ")
@@ -17,10 +18,18 @@ while True:
     if user_input.lower() == "exit":
         break
     if user_input.lower() == "time":
-         print("FRIDAY:", get_time())
-         continue
+        print("FRIDAY:", get_time())
+        continue
     if user_input.lower() == "date":
         print("FRIDAY:", get_date())
+        continue
+    if user_input.lower().startswith("open "):
+        app = user_input[len("open "):]          
+        print("FRIDAY:", open_app(app))
+        continue
+    if user_input.lower().startswith("search "):
+        query = user_input[len("search "):]
+        print("FRIDAY:", search_web(query))
         continue
     if user_input.lower().startswith("remember "):
         fact=user_input[9:]
