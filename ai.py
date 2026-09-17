@@ -6,3 +6,9 @@ def build_system_prompt(memory):
         facts_sentence = "; ".join(memory["facts"])
         system_prompt += f" Facts about the user: {facts_sentence}"
     return system_prompt
+def trim(messages, keep=10):
+    if len(messages) <= keep:
+        return messages
+
+    trimmed = [messages[0]] + messages[-(keep - 1):]
+    return trimmed

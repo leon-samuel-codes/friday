@@ -1,4 +1,4 @@
-from ai import build_system_prompt     
+from ai import build_system_prompt , trim  
 from ollama import chat
 from memory import load_memory,  save_memory 
 from commands import get_time, get_date, open_app, search_web
@@ -37,6 +37,8 @@ while True:
         save_memory(memory)
         print("[saved ✓]")
     messages.append({"role": "user", "content": user_input})  
+    messages = trim(messages, 10)
+
     response = chat(
         model="qwen3:4b",
         messages=messages,
