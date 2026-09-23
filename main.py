@@ -1,10 +1,44 @@
-from ai import build_system_prompt, trim
+import os, sys, time
+import ollama
 from ollama import chat
+from ai import build_system_prompt, trim
 from memory import load_memory, save_memory
 from commands import get_time, get_date, open_app, search_web
+
 THINK_TAG = "<" + "/" + "think" + ">"
 
 
+def check_ollama():
+    try:
+        ollama.list()
+        return True
+    except Exception:
+        pass
+
+    print("FRIDAY: Ollama isn't running — starting it...")
+    ollama_path = os.path.join(os.environ["LOCALAPPDATA"],
+                               "Programs", "Ollama", "Ollama.exe")
+    try:
+        os.startfile(ollama_path)
+    except OSError:
+        print("Couldn't find Ollama at:", ollama_path)
+        return False
+
+    for attempt in range(15):
+        time.sleep(1)
+        try:
+            ollama.list()
+            print("FRIDAY: Ollama ready.")
+            return True
+        except Exception:
+            print(f"Waiting for Ollama... ({attempt + 1}/15)")
+
+    print("Ollama didn't start in 15s — open it manually.")
+    return False
+
+
+if not check_ollama():
+    sys.exit(1)
 memory = load_memory()
 
 if memory.get("name") is None:
