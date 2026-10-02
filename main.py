@@ -1,9 +1,10 @@
 import os, sys, time
 import ollama
 from ollama import chat
-from ai import build_system_prompt, trim
+from ai import build_system_prompt, trim, format_facts
+
 from memory import load_memory, save_memory
-from commands import get_time, get_date, open_app, search_web
+from commands import get_time, get_date, open_app, search_web,  show_help
 
 THINK_TAG = "<" + "/" + "think" + ">"
 
@@ -54,7 +55,11 @@ messages = [{"role": "system", "content": system_prompt}]
 
 while True:
     user_input = input("You: ")
-
+    if not user_input.strip():
+        continue
+    if user_input.lower() =="/help" or user_input.lower()=="help":
+        show_help()
+        continue
     if user_input.lower() == "exit":
         break
 
@@ -65,6 +70,13 @@ while True:
     if user_input.lower() == "date":
         print("FRIDAY:", get_date())
         continue
+    if user_input.lower() == "facts":
+        if memory.get("facts"):
+            print(format_facts(memory["facts"]))
+        else:
+            print("FRIDAY: I don't remember any facts yet.")
+        continue
+
 
     if user_input.lower().startswith("open "):
         app = user_input[len("open "):]
@@ -92,12 +104,26 @@ while True:
         save_memory(memory)
         print(f"[saved ✓] {key_part} = {value}")
         continue
+    if user_input.lower().startswith("forget "):
+        key_part = user_input[len("forget "):].strip().lower()
+        keys = key_part.split(".")
+        node = memory["facts"]
+        try:
+            for k in keys[:-1]:
+                node = node[k]                  
+            removed = node.pop(keys[-1])             
+            save_memory(memory)
+            print(f"[forgotten ✗] {key_part} = {removed}")
+        except KeyError:
+            print(f"FRIDAY: I don't have anything stored at '{key_part}'.")
+        continue
+
 
     messages.append({"role": "user", "content": user_input})
     messages = trim(messages, 10)
 
     response = chat(
-        model="qwen3:4b",
+        model="qwen3:4b-instruct",
         messages=messages,
         think=False
     )

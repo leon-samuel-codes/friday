@@ -10,7 +10,16 @@ APPS = {
     "spotify": r"C:\Users\Leon\AppData\Roaming\Spotify\Spotify.exe",
     "freebuff": "https://freebuff.com/chat"
 }
-
+def show_help():
+    print("""Available commands:
+  facts              - show everything FRIDAY remembers
+  forget <key.path>  - remove a specific fact
+  remember <k>=<v>   - store a fact
+  time / date        - current time/date
+  open <app>         - launch an app
+  search <query>     - web search
+  help              - this list
+  exit               - quit FRIDAY""")
 def open_app(name):
     if name in APPS:
         target = APPS[name]
