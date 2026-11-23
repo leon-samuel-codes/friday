@@ -7,7 +7,7 @@ from memory import load_memory, save_memory
 from commands import get_time, get_date, open_app, search_web,  show_help
 
 THINK_TAG = "<" + "/" + "think" + ">"
-MODEL = "qwen3:4b-instruct"
+MODEL = "qwen3:8b"
 
 
 
@@ -125,10 +125,11 @@ while True:
     messages = trim(messages, 10)
     try:
         response = chat(
-            model=MODEL,
-            messages=messages,
-            think=False
-        )
+    model=MODEL,
+    messages=messages,
+    think=False,
+    options={"num_ctx": 4096},
+)
     except ollama.ResponseError:
         print("FRIDAY: Model error — run 'ollama list' to check it's pulled.")
         messages.pop()
